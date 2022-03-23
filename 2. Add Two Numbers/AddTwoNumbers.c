@@ -1,7 +1,7 @@
 // This file doesn't contain Main function. It carries only the required logical part :)
 #include<stdio.h>
 #include<stdlib.h>
-struct ListNode *head = NULL;
+struct ListNode *head = NULL,*temp;
 struct ListNode* CreateNode(int val)
 {
     struct ListNode *newNode=malloc(sizeof(struct ListNode));
@@ -9,44 +9,48 @@ struct ListNode* CreateNode(int val)
     newNode->val=val;
     return newNode;
 }
-int Num=0;
-
-void findNumber(struct ListNode* l)
+void InsertNode(int val)
 {
-    if (l->next!=NULL)
-        findNumber(l->next);
-    Num=Num*10 + l->val;
-}
-
-void formList(int N)
-{
-    struct ListNode *sum=NULL,*temp;
-    while (N>0)
+    if (head==NULL)
     {
-        sum=CreateNode(N%10);
-        if (head==NULL)
-        {
-            sum->next=NULL;
-            head=sum;
-        }
-        else
-        {
-            temp=head;
-            while(temp->next!=NULL)
-                    temp=temp->next;
-            sum->next=temp->next;
-            temp->next=sum;
-        }
-        N/=10;
+        head=CreateNode(val);
+        temp=head;
+    }
+    else
+    { 
+        temp->next=CreateNode(val);
+        temp=temp->next;
     }
 }
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
 {    
-    struct ListNode *new=NULL;
-    findNumber(l1);
-    int num1=Num;Num=0;
-    findNumber(l2);num1+=Num;
-    formList(num1);
-    struct ListNode* temp=head;
+    struct ListNode *ex=NULL;
+    int carry=0,sum=0,flag=0;
+    if (l1->val==0 && l2->val==0)
+        return l1;
+    while(l1!=NULL && l2!=NULL)
+    {
+        sum=l1->val + l2->val + carry;
+        carry=(sum>=10)?1:0;
+        l1=l1->next;
+        l2=l2->next;
+        InsertNode(sum%10);
+    }
+    if (l1==NULL && l2!=NULL){
+        ex=l2;flag=1;}
+    else if(l2==NULL && l1!=NULL){
+        ex=l1;flag=1;}
+    if (flag==1)
+    {
+        while(ex!=NULL)
+        {
+            sum=ex->val + carry;
+            carry=(sum>=10)?1:0;
+            InsertNode(sum%10);
+            ex=ex->next;
+        }
+    }
+    if (carry>0)
+        InsertNode(carry);
     return head;
 }
