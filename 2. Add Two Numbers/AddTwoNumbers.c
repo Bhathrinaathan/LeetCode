@@ -1,7 +1,9 @@
 // This file doesn't contain Main function. It carries only the required logical part :)
+// Runtime: 12 ms, Memory Usage: 7.8 MB
 #include<stdio.h>
 #include<stdlib.h>
 struct ListNode *head = NULL,*temp;
+
 struct ListNode* CreateNode(int val)
 {
     struct ListNode *newNode=malloc(sizeof(struct ListNode));
@@ -25,32 +27,22 @@ void InsertNode(int val)
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
 {    
     struct ListNode *ex=NULL;
-    int carry=0,sum=0,flag=0;
-    if (l1->val==0 && l2->val==0)
-        return l1;
-    while(l1!=NULL && l2!=NULL)
+    head=NULL;
+    temp=NULL;
+    int carry=0,sum=0,v1,v2;
+    while(l1!=NULL || l2!=NULL)
     {
-        sum=l1->val + l2->val + carry;
+        v1=(l1!=NULL)?l1->val:0;
+        v2=(l2!=NULL)?l2->val:0;
+        sum=v1 + v2 + carry;
         carry=(sum>=10)?1:0;
-        l1=l1->next;
-        l2=l2->next;
-        InsertNode(sum%10);
+        sum=(sum>=10)?sum%10:sum;
+        l1=(l1!=NULL)?l1->next:NULL;
+        l2=(l2!=NULL)?l2->next:NULL;
+        InsertNode(sum);
     }
-    if (l1==NULL && l2!=NULL){
-        ex=l2;flag=1;}
-    else if(l2==NULL && l1!=NULL){
-        ex=l1;flag=1;}
-    if (flag==1)
-    {
-        while(ex!=NULL)
-        {
-            sum=ex->val + carry;
-            carry=(sum>=10)?1:0;
-            InsertNode(sum%10);
-            ex=ex->next;
-        }
-    }
+    
     if (carry>0)
-        InsertNode(carry);
+        InsertNode(1);
     return head;
 }
