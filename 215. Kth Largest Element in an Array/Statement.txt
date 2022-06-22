@@ -1,13 +1,7 @@
 215. Kth Largest Element in an Array
-Medium
 
-10176
+Difficulty : Medium
 
-535
-
-Add to List
-
-Share
 Given an integer array nums and an integer k, return the kth largest element in the array.
 
 Note that it is the kth largest element in the sorted order, not the kth distinct element.
