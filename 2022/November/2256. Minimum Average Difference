@@ -1,0 +1,26 @@
+class Solution {
+    public int minimumAverageDifference(int[] nums) {
+        long sum=0,leftSum=0;
+        int leftCount=1,rightCount=nums.length - 1;
+        for (int i=0;i<nums.length;i++)
+            sum+=nums[i];
+        long lhs,rhs,min=999999999999999l;
+        int index=0;
+        for (int i=0;i<nums.length;i++)
+        {
+            leftSum+=nums[i];
+            lhs=leftSum/leftCount;
+            rhs=(rightCount>0)?(sum-leftSum)/rightCount:0;
+            long avgDiff=((lhs-rhs)>0?lhs-rhs:rhs-lhs);
+            if (i==0){min=avgDiff;}
+            if (avgDiff<min)
+            {
+                min=avgDiff;
+                index=i;
+            }
+            leftCount++;
+            rightCount--;
+         }
+         return index;       
+    }
+}
