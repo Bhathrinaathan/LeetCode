@@ -1,0 +1,19 @@
+class Solution {
+    public int[] lexicographicallySmallestArray(int[] nums, int limit) {
+        ArrayList grp = new ArrayList<Queue<Integer>>();
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int[] res = nums;
+        Arrays.sort(res);
+        int prev = -1;
+        for (int i=0;i<res.length;i++){
+            if (grp.isEmpty() || Math.abs(res[i] -prev))
+                grp.add(new Queue<Integer>());
+            int grpIndex=grp.length()-1;
+            grp.get(grpIndex).add(res[i]);
+            
+
+        }
+
+        return nums;
+    }
+}
